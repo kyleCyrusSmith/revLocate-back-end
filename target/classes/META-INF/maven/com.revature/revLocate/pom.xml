@@ -4,6 +4,7 @@
   <artifactId>revLocate</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>revLocate</name>
+  <packaging>jar</packaging>
     <dependencies>
   	<dependency>
     	<groupId>org.hibernate</groupId>
