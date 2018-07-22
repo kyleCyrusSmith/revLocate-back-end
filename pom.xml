@@ -12,11 +12,5 @@
       	<version>5.2.0.Final</version>
       	<!-- <version>4.3.5.Final</version> -->
     </dependency>
-        
-    <dependency>
-      	<groupId>com.oracle</groupId>
-      	<artifactId>ojdbc7</artifactId>
-      	<version>11.2.0</version>
-    </dependency>
   </dependencies>
 </project>
