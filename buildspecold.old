@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn test
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - mvn clean package
+      - mv target/revLocate-0.0.1-SNAPSHOT.war revLocate-0.0.1-SNAPSHOT.war
+artifacts:
+  files:
+    - revLocate-0.0.1-SNAPSHOT.war
+    - .ebextensions/**/*
+eb_codebuild_settings:
+  CodeBuildServiceRole: revLocate-Service
+  ComputeType: BUILD_GENERAL1_SMALL
+  Image: aws/codebuild/java:openjdk-8
+  Timeout: 60
+  base-directory: 'target/revLocate'
