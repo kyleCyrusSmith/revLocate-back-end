@@ -9,10 +9,10 @@ phases:
     commands:
       - echo Build completed on `date`
       - mvn clean package
-      - mv target/revLocate-0.0.1-SNAPSHOT.jar revLocate-0.0.1-SNAPSHOT.jar
+      - mv target/revLocate-0.0.1-SNAPSHOT.war revLocate-0.0.1-SNAPSHOT.war
 artifacts:
   files:
-    - revLocate-0.0.1-SNAPSHOT.jar
+    - revLocate-0.0.1-SNAPSHOT.war
     - .ebextensions/**/*
 eb_codebuild_settings:
   CodeBuildServiceRole: revLocate-Service
