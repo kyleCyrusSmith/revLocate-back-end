@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx.xsd">
+        
+    <context:component-scan base-package="com.revature"/>
+    <mvc:annotation-driven/>
+    <tx:annotation-driven/>
+        <!-- Needs exactly 3 beans, DataSource bean,SessionFactory bean, and TransactionManager -->
+        
+        <!-- DataSource bean, we're using DBCP2 from Apache commons- a DB connection pool provider, Not the only DS bean to implement,
+        but it is still a strong option. -->
+        <bean id="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        	<property name="url" value="jdbc:mysql://revlocatedb.cbgnxfydyd2b.us-east-2.rds.amazonaws.com:3306/dbname"/>
+        	<property name="username" value="administrator"/>
+        	<property name="password" value="administrator"/>
+        </bean>
+        <!-- SessionFactory bean -->
+        <bean id="mySessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        	<property name="dataSource" ref="myDataSource"/>
+        	<property name="packagesToScan" value="com.revature"/>
+        	<property name="hibernateProperties">
+        		<props>
+        			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+        			<prop key="hibernate.show_sql">true</prop>
+        			<prop key="hibernate.format_sql">true</prop>
+        			<prop key="hibernate.hb2ddl.auto">create</prop>
+        		</props>
+        	</property>
+        </bean>
+        <!-- TransactionManager bean -->
+        <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        	<property name="sessionFactory" ref="mySessionFactory"/>
+        </bean>
+</beans>
