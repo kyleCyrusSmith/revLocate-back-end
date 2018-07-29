@@ -1,1 +1,5 @@
+com\revature\controllers\UserController.class
 com\revature\servlets\TestServlet.class
+com\revature\repositories\UserRepository.class
+com\revature\services\UserService.class
+com\revature\beans\User.class
