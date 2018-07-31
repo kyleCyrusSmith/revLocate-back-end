@@ -8,9 +8,6 @@ import com.revature.repositories.UserRepository;
 
 @Service
 public class UserService {
-	static {
-		System.out.println("Main Service method called");
-	}
 	@Autowired
 	UserRepository repo;
 	
