@@ -1,25 +1,38 @@
 package com.revature.controllers;
 
+<<<<<<< HEAD
 import java.util.List;
 
+=======
+>>>>>>> 8fa629b157e6e7b04677fc696651e8740c35ded1
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.GetMapping;
+=======
+>>>>>>> 8fa629b157e6e7b04677fc696651e8740c35ded1
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+<<<<<<< HEAD
 import com.revature.beans.Set;
+=======
+>>>>>>> 8fa629b157e6e7b04677fc696651e8740c35ded1
 import com.revature.beans.User;
 import com.revature.services.UserService;
 
 @CrossOrigin
 @RestController
+<<<<<<< HEAD
 @RequestMapping(value="/users")
+=======
+@RequestMapping(value="/user")
+>>>>>>> 8fa629b157e6e7b04677fc696651e8740c35ded1
 public class UserController {
 	@Autowired
 	UserService uservice;
@@ -40,7 +53,11 @@ public class UserController {
 	}
 	
 	//Tested on POSTMAN on 7/27/2018 @ 11:05
+<<<<<<< HEAD
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+=======
+	@PostMapping(value="/register", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+>>>>>>> 8fa629b157e6e7b04677fc696651e8740c35ded1
 	public ResponseEntity<User> registerUser(@RequestBody User u){
 		System.out.println("the username: "+u.getUsername());
 		System.out.println("the password: "+u.getPassword());
@@ -58,6 +75,7 @@ public class UserController {
 		}
 	}
 	
+<<<<<<< HEAD
 	@GetMapping(value="/sets",produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Set> allUserSets(@RequestBody int id) {
 		List<Set> userSets = null;
@@ -65,5 +83,7 @@ public class UserController {
 		return userSets;
 	}
 	
+=======
+>>>>>>> 8fa629b157e6e7b04677fc696651e8740c35ded1
 	
 }
