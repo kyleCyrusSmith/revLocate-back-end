@@ -1,5 +1,4 @@
 /target/
-<<<<<<< HEAD
 /.metadata/
 # Compiled class file
 *.class 
@@ -94,5 +93,3 @@ package-lock.json
 
 # hibernate config xml
 hibernate.cfg.xml
-=======
->>>>>>> 8fa629b157e6e7b04677fc696651e8740c35ded1
