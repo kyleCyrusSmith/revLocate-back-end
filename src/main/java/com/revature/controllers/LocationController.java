@@ -1,7 +1,6 @@
 package com.revature.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.Location;
-import com.revature.beans.User;
 import com.revature.services.LocationService;
 
 @CrossOrigin
@@ -34,4 +32,9 @@ public class LocationController {
 		Location randLoc= lservice.getRandomLocation();
 		return randLoc;
 	}
+//	@PostMapping(value="/new", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<Location> newLocation(@RequestBody Location loc) {
+//		
+//		return lservice.newLocation(loc)
+//	}
 }

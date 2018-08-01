@@ -44,6 +44,6 @@ public class LocationRepository {
 	
 	public List<Location> getAllLocations(){
 		Session s = sessionFactory.getCurrentSession();
-		return s.createQuery("from Locations", Location.class).getResultList();
+		return s.createQuery("from Location", Location.class).getResultList();
 	}
 }
