@@ -1,21 +1,25 @@
 package com.revature.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.Set;
 import com.revature.beans.User;
 import com.revature.services.UserService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/user")
+@RequestMapping(value="/users")
 public class UserController {
 	@Autowired
 	UserService uservice;
@@ -36,7 +40,7 @@ public class UserController {
 	}
 	
 	//Tested on POSTMAN on 7/27/2018 @ 11:05
-	@PostMapping(value="/register", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> registerUser(@RequestBody User u){
 		System.out.println("the username: "+u.getUsername());
 		System.out.println("the password: "+u.getPassword());
@@ -52,6 +56,13 @@ public class UserController {
 		}else {
 			return new ResponseEntity<User>(HttpStatus.CONFLICT);
 		}
+	}
+	
+	@GetMapping(value="/sets",produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Set> allUserSets(@RequestBody int id) {
+		List<Set> userSets = null;
+		
+		return userSets;
 	}
 	
 	
