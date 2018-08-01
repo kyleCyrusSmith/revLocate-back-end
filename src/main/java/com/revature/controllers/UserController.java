@@ -30,7 +30,7 @@ public class UserController {
 		User temp = uservice.login(u);
 		if(u.getUsername()==null || u.getPassword() ==null) {
 			System.out.println("no dice, captain");
-			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<User>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}else if(temp == null) {
 			return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 		}
