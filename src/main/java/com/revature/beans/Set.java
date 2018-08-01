@@ -11,58 +11,42 @@ import org.springframework.stereotype.Component;
 
 @Component @Entity @Table(name="Sets")
 public class Set {
-	
+
 	@Id @Column(name="SetID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int setId;
-	
+
 	@Column(name="LocationID_1")
 	private int loc1;
-	
+
 	@Column(name="LocationID_2")
 	private int loc2;
-	
+
 	@Column(name="LocationID_3")
 	private int loc3;
-	
+
 	@Column(name="LocationID_4")
 	private int loc4;
-	
+
 	@Column(name="LocationID_5")
 	private int loc5;
-	
+
 	@Column(name="Author")
 	private int authorId;
-	
-	@Column(name="Rating")
-	private int Rating;
-	
+
+	@Column(name="Total_Rating")
+	private double totalRating;
+
+	@Column(name="Total_Rated")
+	private int totalRated;
+
 	@Column(name="High_Score")
 	private int highScore;
-	
+
 	public Set() {}
 	
-	
-
-	public Set(int setId, int authorId, int rating, int highScore) {
-		super();
-		this.setId = setId;
-		this.authorId = authorId;
-		Rating = rating;
-		this.highScore = highScore;
-	}
-
-
-
-	public Set(int setId, int authorId) {
-		super();
-		this.setId = setId;
-		this.authorId = authorId;
-	}
-
-
-
-	public Set(int setId, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId, int rating, int highScore) {
+	public Set(int setId, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId, double totalRating,
+			int totalRated, int highScore) {
 		super();
 		this.setId = setId;
 		this.loc1 = loc1;
@@ -71,8 +55,26 @@ public class Set {
 		this.loc4 = loc4;
 		this.loc5 = loc5;
 		this.authorId = authorId;
-		Rating = rating;
+		this.totalRating = totalRating;
+		this.totalRated = totalRated;
 		this.highScore = highScore;
+	}
+
+
+
+	public Set(int setId, double totalRating, int totalRated) {
+		super();
+		this.setId = setId;
+		this.totalRating = totalRating;
+		this.totalRated = totalRated;
+	}
+
+
+
+	public Set(int setId, int authorId) {
+		super();
+		this.setId = setId;
+		this.authorId = authorId;
 	}
 
 
@@ -133,12 +135,20 @@ public class Set {
 		this.authorId = authorId;
 	}
 
-	public int getRating() {
-		return Rating;
+	public double getTotalRating() {
+		return totalRating;
 	}
 
-	public void setRating(int rating) {
-		Rating = rating;
+	public void setTotalRating(double totalRating) {
+		this.totalRating = totalRating;
+	}
+
+	public int getTotalRated() {
+		return totalRated;
+	}
+
+	public void setTotalRated(int totalRated) {
+		this.totalRated = totalRated;
 	}
 
 	public int getHighScore() {
@@ -148,5 +158,7 @@ public class Set {
 	public void setHighScore(int highScore) {
 		this.highScore = highScore;
 	}
+
+
 
 }
