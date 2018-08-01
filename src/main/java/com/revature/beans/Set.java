@@ -34,6 +34,9 @@ public class Set {
 	@Column(name="Author")
 	private int authorId;
 
+	@Column(name="Rating")
+	private double rating;
+	
 	@Column(name="Total_Rating")
 	private double totalRating;
 
@@ -45,8 +48,11 @@ public class Set {
 
 	public Set() {}
 	
-	public Set(int setId, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId, double totalRating,
-			int totalRated, int highScore) {
+
+
+
+	public Set(int setId, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId, double rating,
+			double totalRating, int totalRated, int highScore) {
 		super();
 		this.setId = setId;
 		this.loc1 = loc1;
@@ -55,19 +61,12 @@ public class Set {
 		this.loc4 = loc4;
 		this.loc5 = loc5;
 		this.authorId = authorId;
+		this.rating = rating;
 		this.totalRating = totalRating;
 		this.totalRated = totalRated;
 		this.highScore = highScore;
 	}
 
-
-
-	public Set(int setId, double totalRating, int totalRated) {
-		super();
-		this.setId = setId;
-		this.totalRating = totalRating;
-		this.totalRated = totalRated;
-	}
 
 
 
@@ -134,6 +133,22 @@ public class Set {
 	public void setAuthorId(int authorId) {
 		this.authorId = authorId;
 	}
+
+	
+	
+	public double getRating() {
+		return rating;
+	}
+
+
+
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+
+
 
 	public double getTotalRating() {
 		return totalRating;
