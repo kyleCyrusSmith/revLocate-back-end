@@ -25,7 +25,7 @@ public class UserController {
 	@Autowired
 	UserService uservice;
 	
-	//Tested on POSTMAN on 7/27/2018 @ 10:08 AM, Works. -Algustus Lee
+	//Tested on POSTMAN on 8/2/2018 @ 3:37 PM, Works. -Algustus Lee
 	@PostMapping(value="/login", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> loginUser(@RequestBody User u) {
 		User temp = uservice.login(u);
@@ -59,14 +59,15 @@ public class UserController {
 		}
 	}
 	
+	//POSTMAN tested on 8/2/2018 at 4:55 PM, it works -Al
 	@PutMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> updateUser(@RequestBody User u){
 		User user = uservice.updateUser(u);
 		
 		if(user == null) {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<User>(u, HttpStatus.NOT_FOUND);
 		}else {
-			return new ResponseEntity<User>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
 		}
 	}
 	
@@ -77,7 +78,7 @@ public class UserController {
 			return userSets;
 		}
 		else {
-			return null;
+			return userSets;
 		}
 	}
 	

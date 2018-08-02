@@ -23,8 +23,7 @@ public class UserService {
 	}
 	
 	public User updateUser(User u) {
-		repo.updateUser(u);
-		return u;
+		return repo.updateUser(u);
 	}
 	
 	public boolean checkForUsername(String un) {
