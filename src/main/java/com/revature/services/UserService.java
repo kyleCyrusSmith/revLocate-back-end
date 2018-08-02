@@ -22,6 +22,10 @@ public class UserService {
 		return repo.login(u);
 	}
 	
+	public User updateUser(User u) {
+		return repo.updateUser(u);
+	}
+	
 	public boolean checkForUsername(String un) {
 		return repo.checkForUsername(un);
 	}
@@ -37,9 +41,11 @@ public class UserService {
 				response = 1;
 			}
 			else {
+				System.out.println("Email is bad");
 				response = -2;
 			}
 		}else {
+			System.out.println("Username is bad");
 			response = -1;
 		}
 		

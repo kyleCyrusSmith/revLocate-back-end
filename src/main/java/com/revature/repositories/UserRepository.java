@@ -37,6 +37,26 @@ public class UserRepository {
 			return result.get(0);
 		}
 	}
+	/**
+	 * Updates 
+	 * @param u
+	 */
+	public User updateUser(User u) {
+		Session s = sessionFactory.getCurrentSession();
+		System.out.println(u.getUserId());
+		System.out.println(u.getUsername());
+		System.out.println(u.getPassword());
+		System.out.println(u.getEmail());
+		User user = s.get(User.class, u.getUserId());
+		System.out.println(user.getUserId());
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
+		System.out.println(user.getEmail());		
+		
+		user = u;
+		s.merge(user);
+		return user;
+	}
 	
 	/**
 	 * Validation step for the front-end to make sure that the username is unique. It should help, given that the Username attribute
