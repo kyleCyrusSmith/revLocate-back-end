@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.beans.Set;
 import com.revature.beans.User;
 
 @Transactional
@@ -81,5 +82,15 @@ public class UserRepository {
 		System.out.println(u.getEmail());
 		s.save("Users", u);
 		return u;
+	}
+	/**
+	 * This method gets all of the sets from one specific user. That integer is pulled from the userId
+	 * of the author.
+	 * @param i
+	 * @return
+	 */
+	public List<Set> getSetsFromUser(int i){
+		Session s = sessionFactory.getCurrentSession();
+		return s.createQuery("from Sets where Author = :userId", Set.class).setParameter("userId", i).getResultList();
 	}
 }

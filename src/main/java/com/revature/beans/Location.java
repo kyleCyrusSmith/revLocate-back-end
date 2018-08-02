@@ -30,30 +30,35 @@ public class Location {
 	
 	@Column(name="Difficulty")
 	private String difficulty;
+	
+	@Column(name="Author")
+	private int author;
 
 	public Location () {}
-	
-	
-	
-	public Location(int locationId, double laditude, double longitude, String commonWeather, String localLanguage,
-			String difficulty) {
+
+	public Location(int locationId, double latitude, double longitude, String commonWeather, String localLanguage,
+			String difficulty, int author) {
 		super();
 		this.locationId = locationId;
-		this.latitude = laditude;
+		this.latitude = latitude;
 		this.longitude = longitude;
 		this.commonWeather = commonWeather;
 		this.localLanguage = localLanguage;
 		this.difficulty = difficulty;
+		this.author = author;
 	}
-
-
+	
+	public Location(int locationId, double latitude, double longitude) {
+		super();
+		this.locationId = locationId;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
 
 	public Location(int locationId) {
 		super();
 		this.locationId = locationId;
 	}
-
-
 
 	public int getLocationId() {
 		return locationId;
@@ -67,7 +72,7 @@ public class Location {
 		return latitude;
 	}
 
-	public void setLaditude(double latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
@@ -102,7 +107,13 @@ public class Location {
 	public void setDifficulty(String difficulty) {
 		this.difficulty = difficulty;
 	}
-	
-	
 
+	public int getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(int author) {
+		this.author = author;
+	}
+	
 }

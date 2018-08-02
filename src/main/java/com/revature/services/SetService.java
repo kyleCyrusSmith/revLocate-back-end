@@ -6,7 +6,6 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.Set;
-import com.revature.beans.User;
 import com.revature.repositories.SetRepository;
 
 @Service
@@ -18,10 +17,6 @@ public class SetService {
 		theSet.setRating((theSet.getTotalRating()+rating) /theSet.getTotalRated());
 		repo.updateSet(theSet);
 		return theSet;
-	}
-	
-	public List<Set> getSetsFromUser(User u){
-		return repo.getSetsFromUser(u.getUserId());
 	}
 	
 	public Set newSet(Set set) {
