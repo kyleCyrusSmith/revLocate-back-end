@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.RatingSet;
 import com.revature.beans.Set;
-import com.revature.beans.User;
+import com.revature.beans.UserSet;
 import com.revature.services.SetService;
 
 @CrossOrigin
@@ -40,20 +41,24 @@ public class SetController {
 	}
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set> rateSet(Set theSet, double rating) {
-		new DecimalFormat("#.#").format(rating);
-		sservice.rateSet(theSet, rating);
-		if(theSet == null) {
-			return new ResponseEntity<Set>(theSet, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Set> rateSet(@RequestBody RatingSet rs) {
+		new DecimalFormat("#.#").format(rs.getRating());
+		sservice.rateSet(rs.getSet(), rs.getRating());
+		if(rs.getSet() == null) {
+			return new ResponseEntity<Set>(rs.getSet(), HttpStatus.BAD_REQUEST);
 		}else {
-			return new ResponseEntity<Set>(theSet, HttpStatus.OK);
+			return new ResponseEntity<Set>(rs.getSet(), HttpStatus.OK);
 		}
 	}
 	@PostMapping(value="/new",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set> newSet(Set set, User user){
-		set.setAuthorId(user.getUserId());
-			sservice.newSet(set);
-			return new ResponseEntity<Set>(set, HttpStatus.OK);
+	public ResponseEntity<Set> newSet(@RequestBody UserSet us){
+		us.getSet().setAuthorId(us.getUser().getUserId());
+		if(us.getSet() != null && us.getUser() != null) {
+			sservice.newSet(us.getSet());
+			return new ResponseEntity<Set>(us.getSet(), HttpStatus.ACCEPTED);	
+		}else {
+			return new ResponseEntity<Set>(us.getSet(), HttpStatus.METHOD_NOT_ALLOWED);
+		}
 		
 	}
 

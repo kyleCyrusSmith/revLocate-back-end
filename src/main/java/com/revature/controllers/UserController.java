@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.Set;
 import com.revature.beans.User;
+import com.revature.beans.UserSet;
 import com.revature.services.UserService;
 
 @CrossOrigin
@@ -59,10 +60,14 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/sets",produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Set> allUserSets(@RequestBody int id) {
-		List<Set> userSets = null;
-		
-		return userSets;
+	public List<Set> allUserSets(@RequestBody User u) {
+		List<Set> userSets = uservice.getSetsFromUser(u);
+		if(userSets.size() > 0) {
+			return userSets;
+		}
+		else {
+			return null;
+		}
 	}
 	
 	

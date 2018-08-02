@@ -34,16 +34,6 @@ public class SetRepository {
 		return grabbedSet;
 	}
 	/**
-	 * This method gets all of the sets from one specific user. That integer is pulled from the userId
-	 * of the author.
-	 * @param i
-	 * @return
-	 */
-	public List<Set> getSetsFromUser(int i){
-		Session s = sessionFactory.getCurrentSession();
-		return s.createQuery("from Sets where Author = :userId", Set.class).setParameter("userId", i).getResultList();
-	}
-	/**
 	 * This method insets a new Set into the database
 	 * @param newSet
 	 * @return

@@ -1,8 +1,11 @@
 package com.revature.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revature.beans.Set;
 import com.revature.beans.User;
 import com.revature.repositories.UserRepository;
 
@@ -10,6 +13,10 @@ import com.revature.repositories.UserRepository;
 public class UserService {
 	@Autowired
 	UserRepository repo;
+	
+	public List<Set> getSetsFromUser(User u){
+		return repo.getSetsFromUser(u.getUserId());
+	}
 	
 	public User login(User u) {
 		return repo.login(u);
