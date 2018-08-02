@@ -36,13 +36,13 @@ public class UserController {
 			return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 		}
 		else {
-			return new ResponseEntity<User>(HttpStatus.OK);
+			return new ResponseEntity<User>(temp, HttpStatus.OK);
 		}
 	}
 	
 	//Tested on POSTMAN on 7/27/2018 @ 11:05
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> registerUser(@RequestBody User u){
+	public ResponseEntity<Integer> registerUser(@RequestBody User u){
 		System.out.println("the username: "+u.getUsername());
 		System.out.println("the password: "+u.getPassword());
 		System.out.println("the email: "+u.getEmail());
@@ -53,9 +53,9 @@ public class UserController {
 		
 		System.out.println("The code is: "+workingCode);
 		if(workingCode == 1) {
-			return new ResponseEntity<User>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<Integer>(workingCode, HttpStatus.ACCEPTED);
 		}else {
-			return new ResponseEntity<User>(HttpStatus.CONFLICT);
+			return new ResponseEntity<Integer>(workingCode, HttpStatus.CONFLICT);
 		}
 	}
 	
