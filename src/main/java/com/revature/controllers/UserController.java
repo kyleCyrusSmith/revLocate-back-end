@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.Set;
 import com.revature.beans.User;
-import com.revature.beans.UserSet;
 import com.revature.services.UserService;
 
 @CrossOrigin
@@ -56,6 +56,17 @@ public class UserController {
 			return new ResponseEntity<User>(HttpStatus.ACCEPTED);
 		}else {
 			return new ResponseEntity<User>(HttpStatus.CONFLICT);
+		}
+	}
+	
+	@PutMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<User> updateUser(@RequestBody User u){
+		User user = uservice.updateUser(u);
+		
+		if(user == null) {
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<User>(HttpStatus.ACCEPTED);
 		}
 	}
 	

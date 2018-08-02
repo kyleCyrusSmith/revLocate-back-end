@@ -37,6 +37,14 @@ public class UserRepository {
 			return result.get(0);
 		}
 	}
+	/**
+	 * Updates 
+	 * @param u
+	 */
+	public void updateUser(User u) {
+		Session s = sessionFactory.getCurrentSession();
+		s.merge("User", u);
+	}
 	
 	/**
 	 * Validation step for the front-end to make sure that the username is unique. It should help, given that the Username attribute
