@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.beans.Set;
 import com.revature.beans.User;
 
 @Transactional
@@ -35,6 +36,26 @@ public class UserRepository {
 		else {
 			return result.get(0);
 		}
+	}
+	/**
+	 * Updates 
+	 * @param u
+	 */
+	public User updateUser(User u) {
+		Session s = sessionFactory.getCurrentSession();
+		System.out.println(u.getUserId());
+		System.out.println(u.getUsername());
+		System.out.println(u.getPassword());
+		System.out.println(u.getEmail());
+		User user = s.get(User.class, u.getUserId());
+		System.out.println(user.getUserId());
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
+		System.out.println(user.getEmail());		
+		
+		user = u;
+		s.merge(user);
+		return user;
 	}
 	
 	/**
@@ -81,5 +102,15 @@ public class UserRepository {
 		System.out.println(u.getEmail());
 		s.save("Users", u);
 		return u;
+	}
+	/**
+	 * This method gets all of the sets from one specific user. That integer is pulled from the userId
+	 * of the author.
+	 * @param i
+	 * @return
+	 */
+	public List<Set> getSetsFromUser(int i){
+		Session s = sessionFactory.getCurrentSession();
+		return s.createQuery("from Sets where Author = :userId", Set.class).setParameter("userId", i).getResultList();
 	}
 }
