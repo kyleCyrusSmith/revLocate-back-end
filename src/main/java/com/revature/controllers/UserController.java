@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.FriendRelation;
 import com.revature.beans.Set;
 import com.revature.beans.User;
 import com.revature.services.UserService;
@@ -72,15 +73,49 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/sets",produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Set> allUserSets(@RequestBody User u) {
+	public ResponseEntity<List<Set>> allUserSets(User u) {
 		List<Set> userSets = uservice.getSetsFromUser(u);
 		if(userSets.size() > 0) {
-			return userSets;
+			return new ResponseEntity<List<Set>>(userSets,HttpStatus.OK);
 		}
 		else {
-			return userSets;
+			return new ResponseEntity<List<Set>>(userSets,HttpStatus.NO_CONTENT);
 		}
 	}
 	
+	//POSTMAN tested on 8/3/2018 @ 8:20PM, this returns all friends added by the logged in user.
+	//It will return an empty list if there are no added friends. No matter what, it will return a 200.
+	@GetMapping(value="/friends",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<User>> getFriends(User u){
+		List<User> userFriends = uservice.getAllFriends(u);
+			if(userFriends.size() > 0) {
+				return new ResponseEntity<List<User>>(userFriends,HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<User>>(userFriends,HttpStatus.NO_CONTENT);
+			}
+	}
+	
+	@PostMapping(value="/friends/add", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> addFriend(@RequestBody FriendRelation fr){
+		User user = fr.getUser();
+		User target = fr.getTarget();
+		if(uservice.addUser(user, target) == 1) {
+			return new ResponseEntity<Integer>(uservice.addUser(user, target), HttpStatus.ACCEPTED);
+		}else {
+			return new ResponseEntity<Integer>(uservice.addUser(user, target), HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+	
+	@PostMapping(value="/friends/remove", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> removeFriend(@RequestBody FriendRelation fr){
+		User user = fr.getUser();
+		User target = fr.getTarget();
+		if(uservice.deleteUser(user, target) == 1) {
+			return new ResponseEntity<Integer>(uservice.deleteUser(user, target), HttpStatus.ACCEPTED);
+		}else {
+			return new ResponseEntity<Integer>(uservice.deleteUser(user, target), HttpStatus.NOT_FOUND);
+		}
+	}	
 	
 }

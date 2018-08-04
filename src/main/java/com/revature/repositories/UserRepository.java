@@ -38,20 +38,12 @@ public class UserRepository {
 		}
 	}
 	/**
-	 * Updates 
+	 * Updates the user to the new settings inputted from the front end.
 	 * @param u
 	 */
 	public User updateUser(User u) {
 		Session s = sessionFactory.getCurrentSession();
-		System.out.println(u.getUserId());
-		System.out.println(u.getUsername());
-		System.out.println(u.getPassword());
-		System.out.println(u.getEmail());
-		User user = s.get(User.class, u.getUserId());
-		System.out.println(user.getUserId());
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(user.getEmail());		
+		User user = s.get(User.class, u.getUserId());		
 		
 		user = u;
 		s.merge(user);
@@ -112,5 +104,69 @@ public class UserRepository {
 	public List<Set> getSetsFromUser(int i){
 		Session s = sessionFactory.getCurrentSession();
 		return s.createQuery("from Sets where Author = :userId", Set.class).setParameter("userId", i).getResultList();
+	}
+	/**
+	 * Function to get all the friends of the currently logged-in user.
+	 * @param user the user that is logged in
+	 * @return a list of all the users
+	 */
+	public List<User> getAllFriends(User user){
+		Session s = sessionFactory.getCurrentSession();
+		String sql = "Select * FROM Friends f INNER JOIN Users u ON u.UserID = f.friend WHERE f.user = :currentUser";
+		List<User> theList = s.createNativeQuery(sql, User.class).setParameter("currentUser", user.getUserId()).getResultList();
+		System.out.println(theList);
+		return theList;
+	}
+	
+	/**
+	 * Checks to see if a user already has someone on their friends list.
+	 * If they already have them on the friends' list, they cannot add them.
+	 * @param user The logged-in user.
+	 * @param target The person they want to add.
+	 * @return returns 1 if someone was added, returns a 0 if someone was not.
+	 */
+	public int addFriend(User user, User target) {
+		Session s = sessionFactory.getCurrentSession();
+		String sql = "Select * FROM Friends f WHERE user = :user AND friend = :target";
+		List<User> theList = s.createNativeQuery(sql, User.class)
+				.setParameter("user", user.getUserId())
+				.setParameter("target", target.getUserId()).getResultList();
+		
+		if(theList.size() == 0) {
+		String sqlString = "insert into Friends(user, friend)values(:user, :target)";
+		s.createNativeQuery(sqlString)
+			.setParameter("user", user.getUserId())
+			.setParameter("target", target.getUserId());
+		return 1;
+		}else {
+			System.out.println("target is already a friend");
+			return 0;
+		}
+	}
+	
+	/**
+	 * Checks to see if a user already has someone on their friends list.
+	 * If they don't have them on their list, they cannot remove them.
+	 * @param user the logged in user
+	 * @param target the (soon to be no longer) friend to be 
+	 * @return returns a 1 if successful delete, a 0 if unsuccessful
+	 */
+	public int removeFriend(User user, User target) {
+		Session s = sessionFactory.getCurrentSession();
+		String sql = "Select * FROM Friends f WHERE user = :user AND friend = :target";
+		List<User> theList = s.createNativeQuery(sql, User.class)
+				.setParameter("user", user.getUserId())
+				.setParameter("target", target.getUserId()).getResultList();
+		if(theList.size() == 1) {
+			String sqlString = "delete from Friends where user = :user AND friend = :target";
+			s.createNativeQuery(sqlString)
+				.setParameter("user", user.getUserId())
+				.setParameter("target", target.getUserId());
+			return 1;			
+		}
+		else {
+			System.out.println("target wasn't on the user's friend's list to begin with");
+			return 0;
+		}
 	}
 }
