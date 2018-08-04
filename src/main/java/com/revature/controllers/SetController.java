@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.RatingSet;
 import com.revature.beans.Set;
-import com.revature.beans.UserSet;
 import com.revature.services.SetService;
 
 @CrossOrigin
@@ -51,13 +50,12 @@ public class SetController {
 		}
 	}
 	@PostMapping(value="/new",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set> newSet(@RequestBody UserSet us){
-		us.getSet().setAuthorId(us.getUser().getUserId());
-		if(us.getSet() != null && us.getUser() != null) {
-			sservice.newSet(us.getSet());
-			return new ResponseEntity<Set>(us.getSet(), HttpStatus.ACCEPTED);	
+	public ResponseEntity<Set> newSet(@RequestBody Set us){
+		if(us != null) {
+			sservice.newSet(us);
+			return new ResponseEntity<Set>(us, HttpStatus.ACCEPTED);	
 		}else {
-			return new ResponseEntity<Set>(us.getSet(), HttpStatus.METHOD_NOT_ALLOWED);
+			return new ResponseEntity<Set>(us, HttpStatus.METHOD_NOT_ALLOWED);
 		}
 		
 	}

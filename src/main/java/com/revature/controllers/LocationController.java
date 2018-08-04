@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.Location;
-import com.revature.beans.Set;
-import com.revature.beans.UserLocation;
 import com.revature.services.LocationService;
 
 @CrossOrigin
@@ -25,6 +23,7 @@ public class LocationController {
 	@Autowired
 	LocationService lservice;
 	
+	//Tested 8/3/2018 @ 11:07 PM It works -Al
 	@GetMapping(value="/{i}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Location> specificLocation(@PathVariable int i){
 		Location specLoc = lservice.getSpecificLocation(i);
@@ -38,15 +37,20 @@ public class LocationController {
 	@GetMapping(value="/random", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Location> randomLocation(){
 		Location randLoc= lservice.getRandomLocation();
+		if(randLoc == null) {
+			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+		}
 		return new ResponseEntity<Location>(randLoc, HttpStatus.OK);
 	}
+	
+	//Tested 8/3/2018 @ 11:07pm It works -Al
 	@PostMapping(value="/new", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Location> newLocation(@RequestBody UserLocation ul) {
-		if(ul.getLoc() != null && ul.getUser() != null) {
-			lservice.newLocation(ul.getUser(), ul.getLoc());
-			return new ResponseEntity<Location>(ul.getLoc(), HttpStatus.ACCEPTED);	
+	public ResponseEntity<Location> newLocation(@RequestBody Location ul) {
+		if(ul != null) {
+			lservice.newLocation(ul);
+			return new ResponseEntity<Location>(ul, HttpStatus.ACCEPTED);	
 		}else {
-			return new ResponseEntity<Location>(ul.getLoc(), HttpStatus.METHOD_NOT_ALLOWED);
+			return new ResponseEntity<Location>(ul, HttpStatus.METHOD_NOT_ALLOWED);
 		}
 	}
 }

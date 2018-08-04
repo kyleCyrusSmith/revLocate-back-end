@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.beans.Location;
-import com.revature.beans.User;
 import com.revature.repositories.LocationRepository;
 
 @Service
@@ -22,13 +21,14 @@ public class LocationService {
 	public Location getRandomLocation() {
 		Random rand = new Random();
 		int value = rand.nextInt(repo.getAllLocations().size());
-		Location randomLocation = repo.getLocationById(value); 
+		System.out.println("Number of locations to choose from: "+repo.getAllLocations().size());
+		System.out.println("The random number: "+(value+1));
+		Location randomLocation = repo.getLocationById(value+1); 
 		
 		return randomLocation;
 	}
 	
-	public Location newLocation(User user, Location loc) {
-		loc.setAuthor(user.getUserId());
+	public Location newLocation(Location loc) {
 		return repo.makeNewLocation(loc);
 	}
 

@@ -15,6 +15,9 @@ public class Set {
 	@Id @Column(name="SetID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int setId;
+	
+	@Column(name="Name")
+	private String name;
 
 	@Column(name="LocationID_1")
 	private int loc1;
@@ -49,12 +52,56 @@ public class Set {
 	public Set() {}
 	
 
+	public Set(String name, int loc1, int loc2, int loc3, int authorId) {
+		super();
+		this.name = name;
+		this.loc1 = loc1;
+		this.loc2 = loc2;
+		this.loc3 = loc3;
+		this.authorId = authorId;
+	}
 
 
-	public Set(int setId, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId, double rating,
+	public Set(String name, int loc1, int loc2, int loc3, int loc4, int authorId) {
+		super();
+		this.name = name;
+		this.loc1 = loc1;
+		this.loc2 = loc2;
+		this.loc3 = loc3;
+		this.loc4 = loc4;
+		this.authorId = authorId;
+	}
+
+
+	public Set(String name, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId) {
+		super();
+		this.name = name;
+		this.loc1 = loc1;
+		this.loc2 = loc2;
+		this.loc3 = loc3;
+		this.loc4 = loc4;
+		this.loc5 = loc5;
+		this.authorId = authorId;
+	}
+
+
+	public Set(String name, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId, int highScore) {
+		super();
+		this.name = name;
+		this.loc1 = loc1;
+		this.loc2 = loc2;
+		this.loc3 = loc3;
+		this.loc4 = loc4;
+		this.loc5 = loc5;
+		this.authorId = authorId;
+		this.highScore = highScore;
+	}
+
+
+	public Set(String name, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId, double rating,
 			double totalRating, int totalRated, int highScore) {
 		super();
-		this.setId = setId;
+		this.name = name;
 		this.loc1 = loc1;
 		this.loc2 = loc2;
 		this.loc3 = loc3;
@@ -68,15 +115,22 @@ public class Set {
 	}
 
 
-
-
-	public Set(int setId, int authorId) {
+	public Set(int setId, String name, int loc1, int loc2, int loc3, int loc4, int loc5, int authorId, double rating,
+			double totalRating, int totalRated, int highScore) {
 		super();
 		this.setId = setId;
+		this.name = name;
+		this.loc1 = loc1;
+		this.loc2 = loc2;
+		this.loc3 = loc3;
+		this.loc4 = loc4;
+		this.loc5 = loc5;
 		this.authorId = authorId;
+		this.rating = rating;
+		this.totalRating = totalRating;
+		this.totalRated = totalRated;
+		this.highScore = highScore;
 	}
-
-
 
 	public int getSetId() {
 		return setId;
@@ -84,6 +138,14 @@ public class Set {
 
 	public void setSetId(int setId) {
 		this.setId = setId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getLoc1() {
@@ -134,21 +196,13 @@ public class Set {
 		this.authorId = authorId;
 	}
 
-	
-	
 	public double getRating() {
 		return rating;
 	}
 
-
-
-
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
-
-
-
 
 	public double getTotalRating() {
 		return totalRating;
@@ -173,7 +227,5 @@ public class Set {
 	public void setHighScore(int highScore) {
 		this.highScore = highScore;
 	}
-
-
-
+	
 }
