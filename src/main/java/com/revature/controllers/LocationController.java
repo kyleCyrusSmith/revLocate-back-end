@@ -49,7 +49,7 @@ public class LocationController {
 	public ResponseEntity<Location> newLocation(@RequestBody Location ul) {
 		if(ul != null) {
 			lservice.newLocation(ul);
-			return new ResponseEntity<Location>(ul, HttpStatus.ACCEPTED);	
+			return new ResponseEntity<Location>(ul, HttpStatus.CREATED);	
 		}else {
 			return new ResponseEntity<Location>(ul, HttpStatus.METHOD_NOT_ALLOWED);
 		}

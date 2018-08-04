@@ -41,6 +41,11 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping(produces=MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<List<User>> getAllUsers(){
+		return new ResponseEntity<List<User>>(uservice.getAllUsers(), HttpStatus.OK);
+	}
+	
 	//Tested on POSTMAN on 7/27/2018 @ 11:05
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> registerUser(@RequestBody User u){
@@ -73,7 +78,7 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/sets",produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Set>> allUserSets(User u) {
+	public ResponseEntity<List<Set>> allUserSets(@RequestBody User u) {
 		List<Set> userSets = uservice.getSetsFromUser(u);
 		if(userSets.size() > 0) {
 			return new ResponseEntity<List<Set>>(userSets,HttpStatus.OK);
@@ -86,7 +91,7 @@ public class UserController {
 	//POSTMAN tested on 8/3/2018 @ 8:20PM, this returns all friends added by the logged in user.
 	//It will return an empty list if there are no added friends. No matter what, it will return a 200.
 	@GetMapping(value="/friends",produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<User>> getFriends(User u){
+	public ResponseEntity<List<User>> getFriends(@RequestBody User u){
 		List<User> userFriends = uservice.getAllFriends(u);
 			if(userFriends.size() > 0) {
 				return new ResponseEntity<List<User>>(userFriends,HttpStatus.OK);

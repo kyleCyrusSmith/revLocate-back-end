@@ -63,4 +63,7 @@ public class UserService {
 	public int deleteUser(User user, User target) {
 		return repo.removeFriend(user, target);
 	}
+	public List<User> getAllUsers(){
+		return repo.getAllUsers();
+	}
 }

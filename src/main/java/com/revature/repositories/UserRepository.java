@@ -105,6 +105,12 @@ public class UserRepository {
 		Session s = sessionFactory.getCurrentSession();
 		return s.createQuery("from Sets where Author = :userId", Set.class).setParameter("userId", i).getResultList();
 	}
+	public List<User> getAllUsers(){
+		Session s = sessionFactory.getCurrentSession();
+		List<User> theList = s.createQuery("From User", User.class).getResultList();
+		return theList;
+	}
+	
 	/**
 	 * Function to get all the friends of the currently logged-in user.
 	 * @param user the user that is logged in
