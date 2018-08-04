@@ -72,7 +72,7 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/sets",produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Set> allUserSets(@RequestBody User u) {
+	public List<Set> allUserSets(User u) {
 		List<Set> userSets = uservice.getSetsFromUser(u);
 		if(userSets.size() > 0) {
 			return userSets;
@@ -80,6 +80,13 @@ public class UserController {
 		else {
 			return userSets;
 		}
+	}
+	
+	//POSTMAN tested on 8/3/2018 @ 8:20PM, this returns all friends added by the logged in user.
+	//It will return an empty list if there are no added friends. No matter what, it will return a 200.
+	@GetMapping(value="/friends",produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<User> getFriends(User u){
+		return uservice.getAllFriends(u);
 	}
 	
 	

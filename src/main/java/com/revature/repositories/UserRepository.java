@@ -38,20 +38,12 @@ public class UserRepository {
 		}
 	}
 	/**
-	 * Updates 
+	 * Updates the user to the new settings inputted from the front end.
 	 * @param u
 	 */
 	public User updateUser(User u) {
 		Session s = sessionFactory.getCurrentSession();
-		System.out.println(u.getUserId());
-		System.out.println(u.getUsername());
-		System.out.println(u.getPassword());
-		System.out.println(u.getEmail());
-		User user = s.get(User.class, u.getUserId());
-		System.out.println(user.getUserId());
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
-		System.out.println(user.getEmail());		
+		User user = s.get(User.class, u.getUserId());		
 		
 		user = u;
 		s.merge(user);
@@ -113,4 +105,22 @@ public class UserRepository {
 		Session s = sessionFactory.getCurrentSession();
 		return s.createQuery("from Sets where Author = :userId", Set.class).setParameter("userId", i).getResultList();
 	}
+	/**
+	 * Function to get all the friends of the currently logged-in user.
+	 * @param user the user that is logged in
+	 * @return a list of all the users
+	 */
+	public List<User> getAllFriends(User user){
+		Session s = sessionFactory.getCurrentSession();
+		String sql = "Select * FROM Friends f INNER JOIN Users u ON u.UserID = f.friend WHERE f.user = :currentUser";
+		List<User> theList = s.createNativeQuery(sql, User.class).setParameter("currentUser", user.getUserId()).getResultList();
+		System.out.println(theList);
+		return theList;
+	}
+	
+//	public int	addFriend(User user, User target) {
+//		Session s = sessionFactory.getCurrentSession();
+//		
+//		return 0;
+//	}
 }

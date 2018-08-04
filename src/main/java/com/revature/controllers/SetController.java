@@ -40,7 +40,7 @@ public class SetController {
 		return sservice.getRandomSet();
 	}
 	
-	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value="/rate",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Set> rateSet(@RequestBody RatingSet rs) {
 		new DecimalFormat("#.#").format(rs.getRating());
 		sservice.rateSet(rs.getSet(), rs.getRating());

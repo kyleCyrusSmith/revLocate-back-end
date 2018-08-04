@@ -51,4 +51,8 @@ public class UserService {
 		
 		return response;
 	}
+	public List<User> getAllFriends(User user){
+		return repo.getAllFriends(user);
+		
+	}
 }
