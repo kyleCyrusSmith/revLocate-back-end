@@ -34,6 +34,7 @@ public class LocationController {
 		}
 	}
 	
+	//Tested 8/4/2018 @ 1:37 PM It works -Al
 	@GetMapping(value="/random", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Location> randomLocation(){
 		Location randLoc= lservice.getRandomLocation();
