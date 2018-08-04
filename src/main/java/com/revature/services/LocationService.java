@@ -23,7 +23,7 @@ public class LocationService {
 		int value = rand.nextInt(repo.getAllLocations().size());
 		System.out.println("Number of locations to choose from: "+repo.getAllLocations().size());
 		System.out.println("The random number: "+(value+1));
-		Location randomLocation = repo.getLocationById(value+1); 
+		Location randomLocation = repo.getAllLocations().get(value); 
 		
 		return randomLocation;
 	}
