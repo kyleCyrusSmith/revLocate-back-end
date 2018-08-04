@@ -26,15 +26,19 @@ public class LocationController {
 	LocationService lservice;
 	
 	@GetMapping(value="/{i}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public Location specificLocation(@PathVariable int i){
+	public ResponseEntity<Location> specificLocation(@PathVariable int i){
 		Location specLoc = lservice.getSpecificLocation(i);
-		return specLoc;		
+		if(specLoc == null) {
+			return new ResponseEntity<Location>(HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<Location>(specLoc, HttpStatus.OK);			
+		}
 	}
 	
 	@GetMapping(value="/random", produces=MediaType.APPLICATION_JSON_VALUE)
-	public Location randomLocation(){
+	public ResponseEntity<Location> randomLocation(){
 		Location randLoc= lservice.getRandomLocation();
-		return randLoc;
+		return new ResponseEntity<Location>(randLoc, HttpStatus.OK);
 	}
 	@PostMapping(value="/new", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Location> newLocation(@RequestBody UserLocation ul) {

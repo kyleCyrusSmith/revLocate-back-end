@@ -55,4 +55,12 @@ public class UserService {
 		return repo.getAllFriends(user);
 		
 	}
+	
+	public int addUser(User user, User target) {
+		return repo.addFriend(user, target);
+	}
+	
+	public int deleteUser(User user, User target) {
+		return repo.removeFriend(user, target);
+	}
 }
