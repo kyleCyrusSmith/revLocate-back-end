@@ -35,6 +35,58 @@ public class Location {
 	private int author;
 
 	public Location () {}
+	
+	public Location(double latitude, double longitude, String commonWeather, String localLanguage, String difficulty,
+			int author) {
+		super();
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.commonWeather = commonWeather;
+		this.localLanguage = localLanguage;
+		this.difficulty = difficulty;
+		this.author = author;
+	}
+
+
+	public Location(double latitude, double longitude, String commonWeather, String localLanguage, String difficulty) {
+		super();
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.commonWeather = commonWeather;
+		this.localLanguage = localLanguage;
+		this.difficulty = difficulty;
+	}
+
+
+	public Location(double latitude, double longitude, String commonWeather, String localLanguage, int author) {
+		super();
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.commonWeather = commonWeather;
+		this.localLanguage = localLanguage;
+		this.author = author;
+	}
+
+	public Location(double latitude, double longitude, String commonWeather, int author) {
+		super();
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.commonWeather = commonWeather;
+		this.author = author;
+	}
+
+	public Location(double latitude, double longitude, int author) {
+		super();
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.author = author;
+	}
+
+	public Location(double latitude, double longitude) {
+		super();
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
 
 	public Location(int locationId, double latitude, double longitude, String commonWeather, String localLanguage,
 			String difficulty, int author) {

@@ -35,7 +35,9 @@ public class SetService {
 	public Set getRandomSet() {
 		Random rand = new Random();
 		int value = rand.nextInt(repo.getAllSets().size());
-		Set randomSet = repo.getSetById(value); 
+		System.out.println("The number of sets to choose from is: "+repo.getAllSets().size());
+		System.out.println("the random number is: "+(value+1));
+		Set randomSet = repo.getSetById(value+1); 
 		
 		return randomSet;
 	}
