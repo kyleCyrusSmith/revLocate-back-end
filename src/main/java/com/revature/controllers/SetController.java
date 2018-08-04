@@ -27,16 +27,26 @@ public class SetController {
 	SetService sservice;
 	
 	@GetMapping(value="/all", produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Set> getAllSets(){
-		return sservice.getAllSets();
+	public ResponseEntity<List<Set>> getAllSets(){
+		return new ResponseEntity<List<Set>>(sservice.getAllSets(), HttpStatus.OK);
 	}
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public Set getSetByID(@PathVariable int id) {
-		return sservice.getSetById(id);
+	public ResponseEntity<Set> getSetByID(@PathVariable int id) {
+		Set specSet = sservice.getSetById(id);
+		if(specSet == null) {
+			return new ResponseEntity<Set>(HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<Set>(specSet, HttpStatus.OK);			
+		}
 	}
 	@GetMapping(value="/random", produces=MediaType.APPLICATION_JSON_VALUE)
-	public Set getRandomSet() {
-		return sservice.getRandomSet();
+	public ResponseEntity<Set> getRandomSet() {
+		Set randSet = sservice.getRandomSet();
+		if(randSet == null) {
+			return new ResponseEntity<Set>(HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<Set>(randSet, HttpStatus.OK);			
+		}
 	}
 	
 	@PostMapping(value="/rate",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
