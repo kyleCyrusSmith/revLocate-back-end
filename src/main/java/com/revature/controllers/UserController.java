@@ -101,6 +101,7 @@ public class UserController {
 			}
 	}
 	
+	//Tested On 8/5/2018 @ 2:31 AM, it finally works. -Al 
 	@PostMapping(value="/friends/add", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> addFriend(@RequestBody FriendRelation fr){
 		User user = fr.getUser();
@@ -108,13 +109,14 @@ public class UserController {
 		FriendRelation rel2 = new FriendRelation(user, newFriend);
 		System.out.println("user userid: "+user.getUserId());
 		System.out.println("target userid: "+newFriend.getUserId());
-		if(uservice.addUser(rel2) == 1) {
-			return new ResponseEntity<Integer>(uservice.addUser(rel2), HttpStatus.ACCEPTED);
+		if(uservice.addUser(rel2) > 0) {
+			return new ResponseEntity<Integer>(1, HttpStatus.ACCEPTED);
 		}else {
-			return new ResponseEntity<Integer>(uservice.addUser(rel2), HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<Integer>(0, HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 	
+	//Tested On 8/5/2018 @ 2:31 AM, it finally works. -Al 
 	@PostMapping(value="/friends/remove", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> removeFriend(@RequestBody FriendRelation fr){
 		User user = fr.getUser();
@@ -122,10 +124,10 @@ public class UserController {
 		FriendRelation rel2 = new FriendRelation(user, newFriend);
 		System.out.println("user userid: "+user.getUserId());
 		System.out.println("target userid: "+newFriend.getUserId());
-		if(uservice.deleteUser(rel2) == 1) {
-			return new ResponseEntity<Integer>(uservice.deleteUser(rel2), HttpStatus.ACCEPTED);
+		if(uservice.deleteUser(rel2) > 0) {
+			return new ResponseEntity<Integer>(1, HttpStatus.ACCEPTED);
 		}else {
-			return new ResponseEntity<Integer>(uservice.deleteUser(rel2), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Integer>(2, HttpStatus.NOT_FOUND);
 		}
 	}	
 	
