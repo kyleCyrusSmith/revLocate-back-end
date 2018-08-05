@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revature.beans.FriendRelation;
 import com.revature.beans.Set;
 import com.revature.beans.User;
 import com.revature.repositories.UserRepository;
@@ -16,6 +17,14 @@ public class UserService {
 	
 	public List<Set> getSetsFromUser(User u){
 		return repo.getSetsFromUser(u.getUserId());
+	}
+	
+	public User getUserById(int id) {
+		return repo.getUserById(id);
+	}
+	
+	public User getUserByUsername(String username) {
+		return repo.getUserByUsername(username);
 	}
 	
 	public User login(User u) {
@@ -56,13 +65,14 @@ public class UserService {
 		
 	}
 	
-	public int addUser(User user, User target) {
-		return repo.addFriend(user, target);
+	public int addUser(FriendRelation fr) {
+		return repo.addFriend(fr);
 	}
 	
-	public int deleteUser(User user, User target) {
-		return repo.removeFriend(user, target);
+	public int deleteUser(FriendRelation fr) {
+		return repo.removeFriend(fr);
 	}
+	
 	public List<User> getAllUsers(){
 		return repo.getAllUsers();
 	}

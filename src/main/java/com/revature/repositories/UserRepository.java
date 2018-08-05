@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.beans.FriendRelation;
 import com.revature.beans.Set;
 import com.revature.beans.User;
 
@@ -38,6 +39,16 @@ public class UserRepository {
 		}
 	}
 	/**
+	 * Grabs a user by their id
+	 * @param id
+	 * @return
+	 */
+	public User getUserById(int id) {
+		Session s = sessionFactory.getCurrentSession();
+		User grabbedUser = s.get(User.class, id);
+		return grabbedUser;
+	}
+	/**
 	 * Updates the user to the new settings inputted from the front end.
 	 * @param u
 	 */
@@ -49,7 +60,12 @@ public class UserRepository {
 		s.merge(user);
 		return user;
 	}
-	
+	public User getUserByUsername(String username) {
+		Session s = sessionFactory.getCurrentSession();
+		String sqlString = "SELECT * FROM Users WHERE Username = :username";
+		User grabbedUser = s.createNativeQuery(sqlString, User.class).setParameter("username", username).getSingleResult();
+		return grabbedUser;
+	}
 	/**
 	 * Validation step for the front-end to make sure that the username is unique. It should help, given that the Username attribute
 	 * is already specified as unique in the table.
@@ -131,18 +147,23 @@ public class UserRepository {
 	 * @param target The person they want to add.
 	 * @return returns 1 if someone was added, returns a 0 if someone was not.
 	 */
-	public int addFriend(User user, User target) {
+	public int addFriend(FriendRelation fr) {
 		Session s = sessionFactory.getCurrentSession();
+		System.out.println("the user id: "+fr.getUser().getUserId());
+		System.out.println("the target id: "+fr.getTarget().getUserId());
 		String sql = "Select * FROM Friends f WHERE user = :user AND friend = :target";
 		List<User> theList = s.createNativeQuery(sql, User.class)
-				.setParameter("user", user.getUserId())
-				.setParameter("target", target.getUserId()).getResultList();
-		
+				.setParameter("user", fr.getUser().getUserId())
+				.setParameter("target", fr.getTarget().getUserId())
+				.getResultList();
+		System.out.println("size of the list: "+theList.size());
 		if(theList.size() == 0) {
-		String sqlString = "insert into Friends(user, friend)values(:user, :target)";
-		s.createNativeQuery(sqlString)
-			.setParameter("user", user.getUserId())
-			.setParameter("target", target.getUserId());
+//		String sqlString = "insert into Friends(user, friend)values(:user, :target)";
+//		s.createNativeQuery(sqlString, User.class)
+//			.setParameter("user", user.getUserId())
+//			.setParameter("target", target.getUserId());
+			s.save("Friends", fr);
+		System.out.println(theList);
 		return 1;
 		}else {
 			System.out.println("target is already a friend");
@@ -157,17 +178,18 @@ public class UserRepository {
 	 * @param target the (soon to be no longer) friend to be 
 	 * @return returns a 1 if successful delete, a 0 if unsuccessful
 	 */
-	public int removeFriend(User user, User target) {
+	public int removeFriend(FriendRelation fr) {
 		Session s = sessionFactory.getCurrentSession();
 		String sql = "Select * FROM Friends f WHERE user = :user AND friend = :target";
 		List<User> theList = s.createNativeQuery(sql, User.class)
-				.setParameter("user", user.getUserId())
-				.setParameter("target", target.getUserId()).getResultList();
+				.setParameter("user", fr.getUser().getUserId())
+				.setParameter("target", fr.getTarget().getUserId())
+				.getResultList();
 		if(theList.size() == 1) {
 			String sqlString = "delete from Friends where user = :user AND friend = :target";
 			s.createNativeQuery(sqlString)
-				.setParameter("user", user.getUserId())
-				.setParameter("target", target.getUserId());
+				.setParameter("user", fr.getUser().getUserId())
+				.setParameter("target", fr.getTarget().getUserId());
 			return 1;			
 		}
 		else {

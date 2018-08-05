@@ -104,22 +104,28 @@ public class UserController {
 	@PostMapping(value="/friends/add", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> addFriend(@RequestBody FriendRelation fr){
 		User user = fr.getUser();
-		User target = fr.getTarget();
-		if(uservice.addUser(user, target) == 1) {
-			return new ResponseEntity<Integer>(uservice.addUser(user, target), HttpStatus.ACCEPTED);
+		User newFriend = uservice.getUserByUsername(fr.getTargetName());
+		FriendRelation rel2 = new FriendRelation(user, newFriend);
+		System.out.println("user userid: "+user.getUserId());
+		System.out.println("target userid: "+newFriend.getUserId());
+		if(uservice.addUser(rel2) == 1) {
+			return new ResponseEntity<Integer>(uservice.addUser(rel2), HttpStatus.ACCEPTED);
 		}else {
-			return new ResponseEntity<Integer>(uservice.addUser(user, target), HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<Integer>(uservice.addUser(rel2), HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 	
 	@PostMapping(value="/friends/remove", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> removeFriend(@RequestBody FriendRelation fr){
 		User user = fr.getUser();
-		User target = fr.getTarget();
-		if(uservice.deleteUser(user, target) == 1) {
-			return new ResponseEntity<Integer>(uservice.deleteUser(user, target), HttpStatus.ACCEPTED);
+		User newFriend = uservice.getUserByUsername(fr.getTargetName());
+		FriendRelation rel2 = new FriendRelation(user, newFriend);
+		System.out.println("user userid: "+user.getUserId());
+		System.out.println("target userid: "+newFriend.getUserId());
+		if(uservice.deleteUser(rel2) == 1) {
+			return new ResponseEntity<Integer>(uservice.deleteUser(rel2), HttpStatus.ACCEPTED);
 		}else {
-			return new ResponseEntity<Integer>(uservice.deleteUser(user, target), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Integer>(uservice.deleteUser(rel2), HttpStatus.NOT_FOUND);
 		}
 	}	
 	
