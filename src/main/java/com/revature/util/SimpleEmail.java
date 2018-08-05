@@ -18,6 +18,6 @@ public class SimpleEmail {
 
 		Session session = Session.getInstance(props, null);
 
-		Email.sendMail(session, emailID,"SimpleEmail Testing Subject", "SimpleEmail Testing Body");
+		//Email.sendMail(session, emailID,"SimpleEmail Testing Subject", "SimpleEmail Testing Body");
 	}
 }

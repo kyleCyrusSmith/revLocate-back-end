@@ -16,7 +16,8 @@ public class SetService {
 	
 	public Set rateSet(Set theSet, double rating) {
 		theSet.setTotalRated(theSet.getTotalRated() + 1);
-		theSet.setRating((theSet.getTotalRating()+rating) /theSet.getTotalRated());
+		theSet.setTotalRating(theSet.getTotalRating()+rating);
+		theSet.setRating((theSet.getTotalRating()) /theSet.getTotalRated());
 		return repo.updateSet(theSet);
 	}
 	
