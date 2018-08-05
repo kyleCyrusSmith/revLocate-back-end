@@ -2,6 +2,8 @@ package com.revature.repositories;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,19 +154,17 @@ public class UserRepository {
 		System.out.println("the user id: "+fr.getUser().getUserId());
 		System.out.println("the target id: "+fr.getTarget().getUserId());
 		String sql = "Select * FROM Friends f WHERE user = :user AND friend = :target";
-		List<User> theList = s.createNativeQuery(sql, User.class)
+		List theList = s.createNativeQuery(sql)
 				.setParameter("user", fr.getUser().getUserId())
 				.setParameter("target", fr.getTarget().getUserId())
 				.getResultList();
 		System.out.println("size of the list: "+theList.size());
 		if(theList.size() == 0) {
-//		String sqlString = "insert into Friends(user, friend)values(:user, :target)";
-//		s.createNativeQuery(sqlString, User.class)
-//			.setParameter("user", user.getUserId())
-//			.setParameter("target", target.getUserId());
-			s.save("Friends", fr);
-		System.out.println(theList);
-		return 1;
+		String sqlString = "insert into Friends(user, friend)values(:user, :target)";
+		Query q = s.createNativeQuery(sqlString)
+			.setParameter("user", fr.getUser().getUserId())
+			.setParameter("target", fr.getTarget().getUserId());
+		return q.executeUpdate();
 		}else {
 			System.out.println("target is already a friend");
 			return 0;
@@ -181,16 +181,16 @@ public class UserRepository {
 	public int removeFriend(FriendRelation fr) {
 		Session s = sessionFactory.getCurrentSession();
 		String sql = "Select * FROM Friends f WHERE user = :user AND friend = :target";
-		List<User> theList = s.createNativeQuery(sql, User.class)
+		List theList = s.createNativeQuery(sql)
 				.setParameter("user", fr.getUser().getUserId())
 				.setParameter("target", fr.getTarget().getUserId())
 				.getResultList();
 		if(theList.size() == 1) {
 			String sqlString = "delete from Friends where user = :user AND friend = :target";
-			s.createNativeQuery(sqlString)
+			Query q = s.createNativeQuery(sqlString)
 				.setParameter("user", fr.getUser().getUserId())
 				.setParameter("target", fr.getTarget().getUserId());
-			return 1;			
+			return q.executeUpdate();			
 		}
 		else {
 			System.out.println("target wasn't on the user's friend's list to begin with");
