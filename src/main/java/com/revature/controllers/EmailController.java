@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.beans.Email;
 import com.revature.beans.User;
 import com.revature.services.UserService;
+import com.revature.util.Email;
 
 @CrossOrigin
 @RestController
