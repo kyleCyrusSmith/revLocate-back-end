@@ -7,7 +7,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
 public class TLSEmail {
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		final String fromEmail = "revalocate@gmail.com"; //requires valid gmail id
 		final String password = "P4ssw0rd!"; // correct password for gmail id
 		final String toEmail = "brandon.scoggins44@gmail.com"; // can be any email id 
@@ -31,5 +31,5 @@ public class TLSEmail {
 		Email.sendMail(session, toEmail,"TLSEmail Testing Subject", "TLSEmail Testing Body");
 		
 	}
-
+*/
 }
