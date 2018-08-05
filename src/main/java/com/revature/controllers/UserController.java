@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -89,9 +90,10 @@ public class UserController {
 	}
 	
 	//POSTMAN tested on 8/3/2018 @ 8:20PM, this returns all friends added by the logged in user.
-	//It will return an empty list if there are no added friends. No matter what, it will return a 200.
-	@GetMapping(value="/friends",produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<User>> getFriends(@RequestBody User u){
+	//It will return an empty list if there are no added friends.
+	@GetMapping(value="/{id}/friends",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<User>> getFriends(@PathVariable int id){
+		User u = uservice.getUserById(id);
 		List<User> userFriends = uservice.getAllFriends(u);
 			if(userFriends.size() > 0) {
 				return new ResponseEntity<List<User>>(userFriends,HttpStatus.OK);
