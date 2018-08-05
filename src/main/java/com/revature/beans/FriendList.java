@@ -25,9 +25,8 @@ public class FriendList {
 	
 	public FriendList() {}
 
-	public FriendList(int id, int user1, int user2) {
+	public FriendList(int user1, int user2) {
 		super();
-		this.id = id;
 		this.user1 = user1;
 		this.user2 = user2;
 	}

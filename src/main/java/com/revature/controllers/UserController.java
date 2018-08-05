@@ -8,12 +8,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
+import com.amazonaws.services.simpleemail.model.VerifyEmailIdentityRequest;
+import com.amazonaws.services.simpleemail.model.VerifyEmailIdentityResult;
 import com.revature.beans.FriendRelation;
 import com.revature.beans.Set;
 import com.revature.beans.User;
@@ -41,6 +49,11 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping(produces=MediaType.APPLICATION_PROBLEM_JSON_VALUE)
+	public ResponseEntity<List<User>> getAllUsers(){
+		return new ResponseEntity<List<User>>(uservice.getAllUsers(), HttpStatus.OK);
+	}
+	
 	//Tested on POSTMAN on 7/27/2018 @ 11:05
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> registerUser(@RequestBody User u){
@@ -54,6 +67,9 @@ public class UserController {
 		
 		System.out.println("The code is: "+workingCode);
 		if(workingCode == 1) {
+		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
+		VerifyEmailIdentityRequest request = new VerifyEmailIdentityRequest().withEmailAddress(u.getEmail());
+		VerifyEmailIdentityResult response = client.verifyEmailIdentity(request);
 			return new ResponseEntity<Integer>(workingCode, HttpStatus.ACCEPTED);
 		}else {
 			return new ResponseEntity<Integer>(workingCode, HttpStatus.CONFLICT);
@@ -73,7 +89,7 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/sets",produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Set>> allUserSets(User u) {
+	public ResponseEntity<List<Set>> allUserSets(@RequestBody User u) {
 		List<Set> userSets = uservice.getSetsFromUser(u);
 		if(userSets.size() > 0) {
 			return new ResponseEntity<List<Set>>(userSets,HttpStatus.OK);
@@ -84,9 +100,10 @@ public class UserController {
 	}
 	
 	//POSTMAN tested on 8/3/2018 @ 8:20PM, this returns all friends added by the logged in user.
-	//It will return an empty list if there are no added friends. No matter what, it will return a 200.
-	@GetMapping(value="/friends",produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<User>> getFriends(User u){
+	//It will return an empty list if there are no added friends.
+	@GetMapping(value="/{id}/friends", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<User>> getFriends(@PathVariable int id){
+		User u = uservice.getUserById(id);
 		List<User> userFriends = uservice.getAllFriends(u);
 			if(userFriends.size() > 0) {
 				return new ResponseEntity<List<User>>(userFriends,HttpStatus.OK);
@@ -96,25 +113,33 @@ public class UserController {
 			}
 	}
 	
+	//Tested On 8/5/2018 @ 2:31 AM, it finally works. -Al 
 	@PostMapping(value="/friends/add", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> addFriend(@RequestBody FriendRelation fr){
 		User user = fr.getUser();
-		User target = fr.getTarget();
-		if(uservice.addUser(user, target) == 1) {
-			return new ResponseEntity<Integer>(uservice.addUser(user, target), HttpStatus.ACCEPTED);
+		User newFriend = uservice.getUserByUsername(fr.getTargetName());
+		FriendRelation rel2 = new FriendRelation(user, newFriend);
+		System.out.println("user userid: "+user.getUserId());
+		System.out.println("target userid: "+newFriend.getUserId());
+		if(uservice.addUser(rel2) > 0) {
+			return new ResponseEntity<Integer>(1, HttpStatus.ACCEPTED);
 		}else {
-			return new ResponseEntity<Integer>(uservice.addUser(user, target), HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<Integer>(0, HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 	
+	//Tested On 8/5/2018 @ 2:31 AM, it finally works. -Al 
 	@PostMapping(value="/friends/remove", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> removeFriend(@RequestBody FriendRelation fr){
 		User user = fr.getUser();
-		User target = fr.getTarget();
-		if(uservice.deleteUser(user, target) == 1) {
-			return new ResponseEntity<Integer>(uservice.deleteUser(user, target), HttpStatus.ACCEPTED);
+		User newFriend = uservice.getUserByUsername(fr.getTargetName());
+		FriendRelation rel2 = new FriendRelation(user, newFriend);
+		System.out.println("user userid: "+user.getUserId());
+		System.out.println("target userid: "+newFriend.getUserId());
+		if(uservice.deleteUser(rel2) > 0) {
+			return new ResponseEntity<Integer>(1, HttpStatus.ACCEPTED);
 		}else {
-			return new ResponseEntity<Integer>(uservice.deleteUser(user, target), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Integer>(2, HttpStatus.NOT_FOUND);
 		}
 	}	
 	
