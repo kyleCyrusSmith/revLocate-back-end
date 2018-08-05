@@ -2,6 +2,9 @@ package com.revature.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -9,10 +12,10 @@ import org.springframework.stereotype.Component;
 @Component @Entity @Table(name="Friends")
 public class FriendList {
 	
-//	@Id
-//	@Column(name="id")
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-//	private int id;
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	
 	@Column(name="user")
 	private int user1;
