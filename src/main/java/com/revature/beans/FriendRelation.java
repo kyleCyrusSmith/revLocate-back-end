@@ -3,7 +3,16 @@ package com.revature.beans;
 public class FriendRelation {
 	private User user;
 	private User target;
+	private String targetName;
 	
+	public FriendRelation() {}
+	
+	public FriendRelation(User user, String targetName) {
+		super();
+		this.user = user;
+		this.targetName = targetName;
+	}
+
 	public FriendRelation(User user, User target) {
 		super();
 		this.user = user;
@@ -21,6 +30,15 @@ public class FriendRelation {
 	public void setTarget(User target) {
 		this.target = target;
 	}
+
+	public String getTargetName() {
+		return targetName;
+	}
+	public void setTargetName(String targetName) {
+		this.targetName = targetName;
+	}
+	
+	
 	
 	
 	

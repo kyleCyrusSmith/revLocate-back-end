@@ -26,9 +26,15 @@ public class SetController {
 	@Autowired
 	SetService sservice;
 	
-	@GetMapping(value="/all", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Set>> getAllSets(){
-		return new ResponseEntity<List<Set>>(sservice.getAllSets(), HttpStatus.OK);
+		List<Set> allSets = sservice.getAllSets();
+		if(allSets.size() > 0) {
+			return new ResponseEntity<List<Set>>(sservice.getAllSets(), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<List<Set>>(HttpStatus.NO_CONTENT);
+		}
+		
 	}
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Set> getSetByID(@PathVariable int id) {
@@ -63,7 +69,7 @@ public class SetController {
 	public ResponseEntity<Set> newSet(@RequestBody Set us){
 		if(us != null) {
 			sservice.newSet(us);
-			return new ResponseEntity<Set>(us, HttpStatus.ACCEPTED);	
+			return new ResponseEntity<Set>(us, HttpStatus.CREATED);	
 		}else {
 			return new ResponseEntity<Set>(us, HttpStatus.METHOD_NOT_ALLOWED);
 		}

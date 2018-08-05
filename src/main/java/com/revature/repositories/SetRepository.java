@@ -15,6 +15,7 @@ import com.revature.beans.Set;
 public class SetRepository {
 	@Autowired
 	SessionFactory sessionFactory;
+	
 	/**
 	 * This method gets all of the sets in the database.
 	 * @return
@@ -38,8 +39,15 @@ public class SetRepository {
 	 * @param newSet
 	 * @return
 	 */
-	public Set buildCustomSet(Set newSet) {
+	public Set newSet(Set newSet) {
+		System.out.println("gets to this point");
 		Session s = sessionFactory.getCurrentSession();
+		System.out.println("buildCustomset => set info: "+newSet.toString());
+		System.out.println("buildCustomset => set name: "+newSet.getName());
+		System.out.println("buildCustomset => set authorId: "+newSet.getAuthorId());
+		System.out.println("buildCustomset => set location1: "+newSet.getLoc1());
+		System.out.println("buildCustomset => set location2: "+newSet.getLoc2());
+		System.out.println("buildCustomset => set location3: "+newSet.getLoc3());
 		s.save("Sets", newSet);
 		return newSet;
 	}

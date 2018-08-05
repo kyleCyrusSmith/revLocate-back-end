@@ -32,12 +32,12 @@ public class User {
 	
 	public User () {}
 	
-	public User(String username, String password, String email, int high_Score) {
+	public User(String username, String password, String email, int highScore) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.highScore = high_Score;
+		this.highScore = highScore;
 	}
 
 	public User(String username, String password, String email) {
