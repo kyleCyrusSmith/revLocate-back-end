@@ -3,24 +3,24 @@ package com.revature.beans;
 import java.util.List;
 
 public class Message {
-	private List<User> userList;
+	private List<String> userList;
 	private String messageSubject;
 	private String messageBody;
 	
 	public Message() {}
 	
-	public Message(List<User> userList, String messageSubject, String messageBody) {
+	public Message(List<String> userList, String messageSubject, String messageBody) {
 		super();
 		this.userList = userList;
 		this.messageSubject = messageSubject;
 		this.messageBody = messageBody;
 	}
 
-	public List<User> getUserList() {
+	public List<String> getUserList() {
 		return userList;
 	}
 
-	public void setUserList(List<User> userList) {
+	public void setUserList(List<String> userList) {
 		this.userList = userList;
 	}
 

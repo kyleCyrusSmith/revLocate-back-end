@@ -57,13 +57,12 @@ public class SetController {
 	}
 	
 	@PutMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set> rateSet(@RequestBody RatingSet rs) {
-		new DecimalFormat("#.#").format(rs.getRating());
-		sservice.rateSet(rs.getSet(), rs.getRating());
-		if(rs.getSet() == null) {
-			return new ResponseEntity<Set>(rs.getSet(), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Set> updateSet(@RequestBody Set rs) {
+		Set updatedSet =sservice.updateSet(rs);
+		if(updatedSet == null) {
+			return new ResponseEntity<Set>(rs, HttpStatus.BAD_REQUEST);
 		}else {
-			return new ResponseEntity<Set>(rs.getSet(), HttpStatus.OK);
+			return new ResponseEntity<Set>(updatedSet, HttpStatus.OK);
 		}
 	}
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
