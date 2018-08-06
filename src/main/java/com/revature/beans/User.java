@@ -30,16 +30,20 @@ public class User {
 	@Column(name="High_Score")
 	private int highScore;
 	
-	public User () {}
+	@Column(name="Coins")
+	private int coins;
 	
-	public User(String username, String password, String email, int high_Score) {
+	public User () {}
+
+	public User(String username) {
 		super();
 		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.highScore = high_Score;
 	}
-
+	
+	public User(int userId) {
+		super();
+		this.userId = userId;
+	}
 	public User(String username, String password, String email) {
 		super();
 		this.username = username;
@@ -47,52 +51,73 @@ public class User {
 		this.email = email;
 	}
 
-	public User(int userId, String username, String password, String email, int highScore) {
+
+	public User(String username, String password, String email, int highScore, int coins) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.highScore = highScore;
+		this.coins = coins;
+	}
+
+
+	public User(int userId, String username, String password, String email, int highScore, int coins) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.highScore = highScore;
+		this.coins = coins;
 	}
-	
+
+
 	public int getUserId() {
 		return userId;
 	}
-	
+
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
-	
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public int getHigh_Score() {
+
+	public int getHighScore() {
 		return highScore;
 	}
-	
-	public void setHigh_Score(int highScore) {
+
+	public void setHighScore(int highScore) {
 		this.highScore = highScore;
+	}
+
+	public int getCoins() {
+		return coins;
+	}
+
+	public void setCoins(int coins) {
+		this.coins = coins;
 	}
 }
