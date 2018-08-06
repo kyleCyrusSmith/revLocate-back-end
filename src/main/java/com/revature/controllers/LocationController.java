@@ -45,7 +45,7 @@ public class LocationController {
 	}
 	
 	//Tested 8/3/2018 @ 11:07pm It works -Al
-	@PostMapping(value="/new", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Location> newLocation(@RequestBody Location ul) {
 		if(ul != null) {
 			lservice.newLocation(ul);

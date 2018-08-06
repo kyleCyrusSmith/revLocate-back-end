@@ -15,13 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
-import com.amazonaws.services.simpleemail.model.VerifyEmailIdentityRequest;
-import com.amazonaws.services.simpleemail.model.VerifyEmailIdentityResult;
 import com.revature.beans.FriendRelation;
 import com.revature.beans.Set;
 import com.revature.beans.User;
@@ -67,9 +60,6 @@ public class UserController {
 		
 		System.out.println("The code is: "+workingCode);
 		if(workingCode == 1) {
-		AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
-		VerifyEmailIdentityRequest request = new VerifyEmailIdentityRequest().withEmailAddress(u.getEmail());
-		VerifyEmailIdentityResult response = client.verifyEmailIdentity(request);
 			return new ResponseEntity<Integer>(workingCode, HttpStatus.ACCEPTED);
 		}else {
 			return new ResponseEntity<Integer>(workingCode, HttpStatus.CONFLICT);
