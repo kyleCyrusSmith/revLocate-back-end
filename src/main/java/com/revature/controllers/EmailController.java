@@ -28,13 +28,11 @@ public class EmailController {
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<User>> updateAlert(@RequestBody Message m){
-		List<User> ulist = uservice.getAllUsers();
-		m.setUserList(ulist);
-		for(User user:ulist) {
+		for(User user:m.getUserList()) {
 			System.out.println("called user "+user.getUsername());
 			Email.sendMail("revalocate@gmail.com", user.getEmail(), m.getMessageSubject() , m.getMessageBody());
 		}
 		
-		return new ResponseEntity<List<User>>(ulist, HttpStatus.OK);
+		return new ResponseEntity<List<User>>(m.getUserList(), HttpStatus.OK);
 	}
 }
