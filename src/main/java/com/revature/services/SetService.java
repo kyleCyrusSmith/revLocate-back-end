@@ -20,7 +20,9 @@ public class SetService {
 		theSet.setRating((theSet.getTotalRating()) /theSet.getTotalRated());
 		return repo.updateSet(theSet);
 	}
-	
+	public Set updateSet(Set updatedSet) {
+		return repo.updateSet(updatedSet);
+	}
 	public Set newSet(Set set) {
 		System.out.println("set info: "+set.toString());
 		System.out.println("set name: "+set.getName());
