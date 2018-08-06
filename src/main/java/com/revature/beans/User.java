@@ -35,7 +35,15 @@ public class User {
 	
 	public User () {}
 
+	public User(String username) {
+		super();
+		this.username = username;
+	}
 	
+	public User(int userId) {
+		super();
+		this.userId = userId;
+	}
 	public User(String username, String password, String email) {
 		super();
 		this.username = username;

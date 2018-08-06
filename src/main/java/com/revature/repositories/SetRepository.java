@@ -58,8 +58,11 @@ public class SetRepository {
 	 */
 	public Set updateSet(Set updatedSet) {
 		Session s = sessionFactory.getCurrentSession();
-		s.merge(updatedSet);
-		return updatedSet;
+		Set newSet = s.get(Set.class, updatedSet.getSetId());
+		
+		newSet = updatedSet;
+		s.merge(newSet);
+		return newSet;
 	}
 	
 

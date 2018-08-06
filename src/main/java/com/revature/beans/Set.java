@@ -52,6 +52,12 @@ public class Set {
 	public Set() {}
 	
 
+	public Set(int setId) {
+		super();
+		this.setId = setId;
+	}
+
+
 	public Set(String name, int loc1, int loc2, int loc3, int authorId) {
 		super();
 		this.name = name;
